@@ -29,7 +29,7 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        textBox1 = new System.Windows.Forms.TextBox();
+        txtFuncion = new System.Windows.Forms.TextBox();
         textBox2 = new System.Windows.Forms.TextBox();
         label1 = new System.Windows.Forms.Label();
         textBox3 = new System.Windows.Forms.TextBox();
@@ -41,17 +41,18 @@ partial class Form1
         label6 = new System.Windows.Forms.Label();
         listView1 = new System.Windows.Forms.ListView();
         groupBox1 = new System.Windows.Forms.GroupBox();
-        checkBox2 = new System.Windows.Forms.CheckBox();
-        checkBox1 = new System.Windows.Forms.CheckBox();
+        radioButton2 = new System.Windows.Forms.RadioButton();
+        radioButton1 = new System.Windows.Forms.RadioButton();
+        btnChckSyntax = new System.Windows.Forms.Button();
         groupBox1.SuspendLayout();
         SuspendLayout();
         // 
-        // textBox1
+        // txtFuncion
         // 
-        textBox1.Location = new System.Drawing.Point(60, 61);
-        textBox1.Name = "textBox1";
-        textBox1.Size = new System.Drawing.Size(165, 23);
-        textBox1.TabIndex = 0;
+        txtFuncion.Location = new System.Drawing.Point(60, 61);
+        txtFuncion.Name = "txtFuncion";
+        txtFuncion.Size = new System.Drawing.Size(165, 23);
+        txtFuncion.TabIndex = 0;
         // 
         // textBox2
         // 
@@ -137,7 +138,7 @@ partial class Form1
         // 
         // listView1
         // 
-        listView1.Location = new System.Drawing.Point(268, 61);
+        listView1.Location = new System.Drawing.Point(325, 50);
         listView1.Name = "listView1";
         listView1.Size = new System.Drawing.Size(463, 296);
         listView1.TabIndex = 10;
@@ -145,8 +146,8 @@ partial class Form1
         // 
         // groupBox1
         // 
-        groupBox1.Controls.Add(checkBox2);
-        groupBox1.Controls.Add(checkBox1);
+        groupBox1.Controls.Add(radioButton2);
+        groupBox1.Controls.Add(radioButton1);
         groupBox1.Location = new System.Drawing.Point(60, 206);
         groupBox1.Name = "groupBox1";
         groupBox1.Size = new System.Drawing.Size(178, 75);
@@ -154,31 +155,42 @@ partial class Form1
         groupBox1.TabStop = false;
         groupBox1.Text = "Metodo";
         // 
-        // checkBox2
+        // radioButton2
         // 
-        checkBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
-        checkBox2.Location = new System.Drawing.Point(90, 22);
-        checkBox2.Name = "checkBox2";
-        checkBox2.Size = new System.Drawing.Size(82, 30);
-        checkBox2.TabIndex = 1;
-        checkBox2.Text = "Posc. Falsa";
-        checkBox2.UseVisualStyleBackColor = true;
+        radioButton2.Location = new System.Drawing.Point(94, 22);
+        radioButton2.Name = "radioButton2";
+        radioButton2.Size = new System.Drawing.Size(78, 39);
+        radioButton2.TabIndex = 3;
+        radioButton2.TabStop = true;
+        radioButton2.Text = "Posicion Falsa";
+        radioButton2.UseVisualStyleBackColor = true;
         // 
-        // checkBox1
+        // radioButton1
         // 
-        checkBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
-        checkBox1.Location = new System.Drawing.Point(6, 22);
-        checkBox1.Name = "checkBox1";
-        checkBox1.Size = new System.Drawing.Size(82, 30);
-        checkBox1.TabIndex = 0;
-        checkBox1.Text = "Biseccion";
-        checkBox1.UseVisualStyleBackColor = true;
+        radioButton1.Location = new System.Drawing.Point(6, 30);
+        radioButton1.Name = "radioButton1";
+        radioButton1.Size = new System.Drawing.Size(82, 21);
+        radioButton1.TabIndex = 2;
+        radioButton1.TabStop = true;
+        radioButton1.Text = "Biseccion";
+        radioButton1.UseVisualStyleBackColor = true;
+        // 
+        // btnChckSyntax
+        // 
+        btnChckSyntax.Location = new System.Drawing.Point(231, 61);
+        btnChckSyntax.Name = "btnChckSyntax";
+        btnChckSyntax.Size = new System.Drawing.Size(76, 23);
+        btnChckSyntax.TabIndex = 12;
+        btnChckSyntax.Text = "chckSyntax";
+        btnChckSyntax.UseVisualStyleBackColor = true;
+        btnChckSyntax.Click += btnChckSyntax_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
+        Controls.Add(btnChckSyntax);
         Controls.Add(groupBox1);
         Controls.Add(listView1);
         Controls.Add(label6);
@@ -190,7 +202,7 @@ partial class Form1
         Controls.Add(textBox3);
         Controls.Add(label1);
         Controls.Add(textBox2);
-        Controls.Add(textBox1);
+        Controls.Add(txtFuncion);
         MaximizeBox = false;
         Text = "Form1";
         Load += Form1_Load;
@@ -199,10 +211,12 @@ partial class Form1
         PerformLayout();
     }
 
-    private System.Windows.Forms.CheckBox checkBox2;
+    private System.Windows.Forms.Button btnChckSyntax;
+
+    private System.Windows.Forms.RadioButton radioButton1;
+    private System.Windows.Forms.RadioButton radioButton2;
 
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.CheckBox checkBox1;
 
     private System.Windows.Forms.ListView listView1;
 
@@ -219,7 +233,7 @@ partial class Form1
 
     private System.Windows.Forms.Label label1;
 
-    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.TextBox txtFuncion;
     private System.Windows.Forms.TextBox textBox2;
 
     #endregion

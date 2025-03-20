@@ -33,3 +33,4 @@ C:\Users\Akkarin\RiderProjects\Metodos Numericos\Metodos Numericos\obj\Release\n
 C:\Users\Akkarin\RiderProjects\Metodos Numericos\Metodos Numericos\obj\Release\net8.0\Metodos Numericos.pdb
 C:\Users\Akkarin\RiderProjects\Metodos Numericos\Metodos Numericos\obj\Release\net8.0\Metodos Numericos.genruntimeconfig.cache
 C:\Users\Akkarin\RiderProjects\Metodos Numericos\Metodos Numericos\obj\Release\net8.0\ref\Metodos Numericos.dll
+C:\Users\Akkarin\RiderProjects\Metodos Numericos\Metodos Numericos\obj\Release\net8.0\Metodos Numericos.sourcelink.json

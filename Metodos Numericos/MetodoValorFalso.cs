@@ -4,7 +4,7 @@ namespace Metodos_Numericos;
 
 public class MetodoValorFalso
 {
-    Herramientas hr = new Herramientas();
+    HerramientasCalculo hr = new HerramientasCalculo();
     public void MetodoValorFalsoEV(Expression xp, double limInf, double limSup, double tolerancia,  double RaizAnterior = 0)
     {
         double raiz = RaizAnterior;

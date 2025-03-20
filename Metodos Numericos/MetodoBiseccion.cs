@@ -4,7 +4,7 @@ namespace Metodos_Numericos;
 
 public class MetodoBiseccion
 {
-    Herramientas hr = new Herramientas();
+    HerramientasCalculo hr = new HerramientasCalculo();
     public void MetodoBiseccionEV(Expression xp, double limInf, double limSup, double tolerancia, int maxIteracion = 0)
     {
         if (Constantes.verif > tolerancia)

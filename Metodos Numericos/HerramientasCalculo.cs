@@ -2,7 +2,7 @@
 using Expr = MathNet.Symbolics.SymbolicExpression;
 namespace Metodos_Numericos;
 
-public class Herramientas
+public class HerramientasCalculo
 {
 
     public void TableBuilder(int iteracion, double raiz, double errorAprox)
@@ -23,6 +23,19 @@ public class Herramientas
     
         Console.WriteLine(new string('-', Constantes.headerValorFalso.Length));
         Console.WriteLine(row);
+    }
+
+    public Expression ExpressionSintax(string Ecuacion)
+    {
+        string[] expre = [""];
+        if (Ecuacion.Contains('='))
+        {
+            expre = Ecuacion.Split('=');
+            throw new Exception("Ten en cuenta que estas ingresando una funcion!");
+        }
+        
+        return Infix.ParseOrThrow(Ecuacion);
+
     }
     
     public double EvaluarEcuacion(Expression exp, double termino)
