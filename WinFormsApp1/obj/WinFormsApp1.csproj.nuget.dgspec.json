@@ -46,6 +46,10 @@
             "MathNet.Symbolics": {
               "target": "Package",
               "version": "[0.25.0, )"
+            },
+            "ScottPlot": {
+              "target": "Package",
+              "version": "[5.0.54, )"
             }
           },
           "imports": [

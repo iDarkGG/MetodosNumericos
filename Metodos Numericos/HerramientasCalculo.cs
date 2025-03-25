@@ -5,6 +5,13 @@ namespace Metodos_Numericos;
 public class HerramientasCalculo
 {
 
+    public void TableBuilderPuntoFijo(int iteracion, double raiz, double errorAprox)
+    {
+        string row = string.Format("{0,10} | {1,20} | {2,15:E6}", iteracion, raiz, errorAprox + "%");
+        Console.WriteLine(new string('-', (Constantes.headerBisecc.Length+5)));
+        Console.WriteLine(row);
+    }
+
     public void TableBuilder(int iteracion, double raiz, double errorAprox)
     {
 

@@ -2,24 +2,24 @@
 using Expr = MathNet.Symbolics.SymbolicExpression;
 namespace Metodos_Numericos;
 
-public class MetodoValorFalso
+public class MetodoPosicionFalsa
 {
     HerramientasCalculo hr = new HerramientasCalculo();
-    public void MetodoValorFalsoEV(Expression xp, double limInf, double limSup, double tolerancia,  double RaizAnterior = 0)
+    public void MetodoPosicionFalsoEV(Expression xp, double limInf, double limSup, double tolerancia,  double RaizAnterior = 0)
     {
         double raiz = RaizAnterior;
         if (Constantes.verif > tolerancia)
         {
             if (hr.VerificadorBolzano(xp, limInf, limSup))
             {
-                GenerarRaizValorFalso(limInf, limSup, xp, raiz);
+                GenerarRaizValorFalso(limInf, limSup, xp, raiz, tolerancia);
             }
         } 
     }
 
 
 
-    public void GenerarRaizValorFalso(double limInf, double limSup, Expression exp, double raizAnterior = 0)
+    public void GenerarRaizValorFalso(double limInf, double limSup, Expression exp, double raizAnterior = 0, double tolerancia = 0)
     {
         Constantes.contador++;
         if (hr.VerificadorBolzano(exp, limInf, limSup))
@@ -33,13 +33,15 @@ public class MetodoValorFalso
                 var result1 = hr.EvaluarEcuacion(exp, limInf);
                 if (result1.ToString().Contains('-'))
                 {
-                    hr.TableBuilderValorFalso(Constantes.contador, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
+                    hr.TableBuilderValorFalso(Constantes.contador, raiz, limSup, hr.EvaluarEcuacion(exp, raiz), 
                         hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz, hr.ErrorAproximadoPorcentual(raiz, raizAnterior));
-                    MetodoValorFalsoEV(exp, raiz, limSup, 0.01, raiz);
+                    MetodoPosicionFalsoEV(exp, raiz, limSup,tolerancia , raiz);
                 }
                 else
                 {
-                    MetodoValorFalsoEV(exp, limInf, raiz, 0.01);
+                    hr.TableBuilderValorFalso(Constantes.contador, raiz, limSup, hr.EvaluarEcuacion(exp, raiz), 
+                        hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz, hr.ErrorAproximadoPorcentual(raiz, raizAnterior));
+                    MetodoPosicionFalsoEV(exp, limInf, raiz, tolerancia);
                     Console.WriteLine("Nuevo lim sup");
                 }
             }

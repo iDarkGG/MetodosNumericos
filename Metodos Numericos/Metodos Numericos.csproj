@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
+      <PackageReference Include="ScottPlot" Version="5.0.54" />
     </ItemGroup>
 
 </Project>
