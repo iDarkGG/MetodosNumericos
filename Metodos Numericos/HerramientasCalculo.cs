@@ -42,13 +42,22 @@ public class HerramientasCalculo
         }
         
         return Infix.ParseOrThrow(Ecuacion);
-
     }
     
     public double EvaluarEcuacion(Expression exp, double termino)
     {
+        double result = 0d;
         var simbolos = new Dictionary<string, FloatingPoint>{ {"x", termino} };
-        return Evaluate.Evaluate(simbolos, exp).RealValue;
+        try
+        {
+           result = Evaluate.Evaluate(simbolos, exp).RealValue;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        return result;
     }
 
     public bool VerificadorBolzano(Expression xp, double limInf, double limSup)
@@ -64,6 +73,7 @@ public class HerramientasCalculo
         Constantes.verif = result;
         return result;
     }
+    
 
 }
    
