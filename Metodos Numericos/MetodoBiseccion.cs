@@ -5,31 +5,33 @@ namespace Metodos_Numericos;
 public class MetodoBiseccion
 {
     HerramientasCalculo hr = new HerramientasCalculo();
-    public void MetodoBiseccionEV(Expression xp, double limInf, double limSup, double tolerancia, int maxIteracion = 0)
+    public int MetodoBiseccionEV(Expression xp, double limInf, double limSup, double tolerancia, int maxIteracion = 0, double tolResult =100, int currentCount =0)
     {
-        if (Constantes.verif > tolerancia)
+        if (currentCount < maxIteracion)
         {
-            if (hr.VerificadorBolzano(xp, limInf, limSup))
+            if (tolResult > tolerancia)
             {
-                GenerarRaizBiseccion(limInf, limSup, xp, tolerancia);   
+                if (hr.VerificadorBolzano(xp, limInf, limSup))
+                {
+                   return GenerarRaizBiseccion(limInf, limSup, xp, maxIteracion , tolerancia: tolerancia, contador: currentCount);   
+                }
             }
         }
+        
+        return currentCount;
     }
     
     
-    public void GenerarRaizBiseccion(double limInf, double limSup, Expression exp, double tolerancia = 0)
+    public int GenerarRaizBiseccion(double limInf, double limSup, Expression exp, int maxiteracion, double tolerancia = 0, int contador = 0)
     {
-        Constantes.contador++;
+        contador++;
         var result = (limSup + limInf) / 2;
-        if (hr.VerificadorBolzano(exp, limInf, result) & !hr.VerificadorBolzano(exp, result, limSup))
+        if (hr.VerificadorBolzano(exp, limInf, result))
         {
-            hr.TableBuilder(Constantes.contador, result, hr.ErrorAproximadoPorcentual(result, limInf ));
-            MetodoBiseccionEV(exp,limInf, result, tolerancia);
+            hr.TableBuilder(contador, result, hr.ErrorAproximadoPorcentual(result, limInf, contador ));
+            return MetodoBiseccionEV(exp,limInf, result, tolerancia, maxIteracion: maxiteracion, tolResult:hr.ErrorAproximadoPorcentual(result, limInf, contador), currentCount: contador);
         }
-        else
-        { 
-            hr.TableBuilder(Constantes.contador, result, hr.ErrorAproximadoPorcentual(result, limSup ));
-            MetodoBiseccionEV(exp,result, limSup ,tolerancia);
-        }
+        hr.TableBuilder(contador, result, hr.ErrorAproximadoPorcentual(result, limSup, contador ));
+        return MetodoBiseccionEV(exp,result, limSup ,tolerancia, maxIteracion: maxiteracion,tolResult:hr.ErrorAproximadoPorcentual(result, limSup, contador), currentCount: contador);
     }
 }

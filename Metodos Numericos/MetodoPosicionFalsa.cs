@@ -5,46 +5,53 @@ namespace Metodos_Numericos;
 public class MetodoPosicionFalsa
 {
     HerramientasCalculo hr = new HerramientasCalculo();
-    public void MetodoPosicionFalsoEV(Expression xp, double limInf, double limSup, double tolerancia,  double RaizAnterior = 0)
-    {
+    public int MetodoPosicionFalsoEV(Expression xp, double limInf, double limSup, double tolerancia, double RaizAnterior = 0, double tolResult = 100, int currentCount=0, int maxIteraciones =0 )
+    {   
         double raiz = RaizAnterior;
-        if (Constantes.verif > tolerancia)
+        if (currentCount < maxIteraciones)
         {
-            if (hr.VerificadorBolzano(xp, limInf, limSup))
+            if (tolResult > tolerancia)
             {
-                GenerarRaizValorFalso(limInf, limSup, xp, raiz, tolerancia);
-            }
-        } 
+                if (hr.VerificadorBolzano(xp, limInf, limSup))
+                {
+                    return GenerarRaizValorFalso(limInf, limSup,  xp, raiz, currentCount: currentCount, maxIteraciones: maxIteraciones, tolerancia: tolerancia);
+                }
+            } 
+        }
+        
+        return currentCount;
     }
 
 
 
-    public void GenerarRaizValorFalso(double limInf, double limSup, Expression exp, double raizAnterior = 0, double tolerancia = 0)
+    public int GenerarRaizValorFalso(double limInf, double limSup, Expression exp,  double raizAnterior, double tolerancia = 0, int currentCount = 0, int maxIteraciones = 0)
     {
-        Constantes.contador++;
         if (hr.VerificadorBolzano(exp, limInf, limSup))
         {
+            currentCount++;
             var raiz = limSup - ((hr.EvaluarEcuacion(exp, limSup) * (limInf - limSup)) /
                                  (hr.EvaluarEcuacion(exp, limInf) - hr.EvaluarEcuacion(exp, limSup)));
             var evRaiz = hr.EvaluarEcuacion(exp, raiz);
 
-            if (evRaiz.ToString().Contains('-'))
+            if (evRaiz < 0)
             {
                 var result1 = hr.EvaluarEcuacion(exp, limInf);
                 if (result1.ToString().Contains('-'))
                 {
-                    hr.TableBuilderValorFalso(Constantes.contador, raiz, limSup, hr.EvaluarEcuacion(exp, raiz), 
-                        hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz, hr.ErrorAproximadoPorcentual(raiz, raizAnterior));
-                    MetodoPosicionFalsoEV(exp, raiz, limSup,tolerancia , raiz);
+                    hr.TableBuilderValorFalso(currentCount, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
+                        hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz,
+                        hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount));
+                   return  MetodoPosicionFalsoEV(exp, raiz, limSup, tolerancia, RaizAnterior: raiz, currentCount: currentCount,
+                        tolResult: hr.ErrorAproximadoPorcentual(raiz, raizAnterior), maxIteraciones: maxIteraciones);
                 }
-                else
-                {
-                    hr.TableBuilderValorFalso(Constantes.contador, raiz, limSup, hr.EvaluarEcuacion(exp, raiz), 
-                        hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz, hr.ErrorAproximadoPorcentual(raiz, raizAnterior));
-                    MetodoPosicionFalsoEV(exp, limInf, raiz, tolerancia);
-                    Console.WriteLine("Nuevo lim sup");
-                }
+                hr.TableBuilderValorFalso(currentCount, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
+                    hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz,
+                    hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount));
+                return MetodoPosicionFalsoEV(exp, limInf, raiz, tolerancia, RaizAnterior: raiz, currentCount: currentCount,
+                    tolResult: hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount), maxIteraciones: maxIteraciones);
             }
         }
+        return currentCount;
     }
+    
 }
