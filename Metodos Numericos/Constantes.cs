@@ -8,7 +8,9 @@ public class Constantes
     public static readonly string headerPuntoFijo = string.Format("{0,10} | {1,20} | {2,15}", "Iteración", "Raíz", "Error Aprox");
     public static readonly string headerNewton = string.Format("{0,-10} | {1,-18} | {2,-18} | {3,-18} | {4,-18} | {5,-18}",
         "Iteración", "Xi", "f(Xi)", "f'(Xi)", "Raíz", "Er%");
-    
-    
-    
+    public static readonly string headerSecante = string.Format(
+        "{0,10} | {1,20} | {2,20} | {3,20} | {4,20} | {5,20} | {6,20:}",
+        "iteracion", "Xi", "Xo", "fXi", "fXo", "Raiz", "errorAprox%");
+
+
 }

@@ -29,6 +29,15 @@ public class HerramientasCalculo
         Console.WriteLine(new string('-', (Constantes.headerNewton.Length)));
         Console.WriteLine(row);
     }
+    
+    public void TableBuilderSecante(int iteracion, double Xi,double Xo ,double fXi, double fXo, double Raiz,
+        double errorAprox)
+    {
+        string row = string.Format("{0,10} | {1,20} | {2,20} | {3,20} | {4,20} | {5,20} | {6,30}",
+            iteracion, Xi, Xo , fXi, fXo, Raiz, errorAprox + "%");
+        Console.WriteLine(new string('-', (Constantes.headerNewton.Length)));
+        Console.WriteLine(row);
+    }
 
     public void TableBuilderValorFalso(int iteracion, double limInf, double limSup, double evLimInf, double evLimSup,
         double raizAprox, double evRaizAprox, double errorAprox, int headerlength = 0)
@@ -63,7 +72,7 @@ public class HerramientasCalculo
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            
         }
 
         return result;

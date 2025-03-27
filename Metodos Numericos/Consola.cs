@@ -1,5 +1,5 @@
 ﻿using MathNet.Symbolics;
-using Expr = MathNet.Symbolics.SymbolicExpression;
+using Expr = MathNet.Symbolics.Expression;
 using System.Linq;
 
 namespace Metodos_Numericos;
@@ -13,15 +13,20 @@ public class Consola
         MetodoPuntoFijo pf = new MetodoPuntoFijo();
         MetodoPosicionFalsa mv = new MetodoPosicionFalsa();
         MetodoNewtonRaphson mn = new MetodoNewtonRaphson();
+        MetodoSecante ms = new MetodoSecante();
+        HerramientasCalculo hr = new HerramientasCalculo();
         
         int menu = 0;
+
         var eqq = String.Empty;
+
+        
 
         do
         {
             Console.WriteLine("Por favor seleccione el Metodo con el que aproximar");
-            Console.WriteLine("1. Biseccion \n2. Posicion Falsa \n3. Punto Fijo \n4. Newton Raphson \n0. Determinar el mas optimo");
-            Console.WriteLine("5. Salir");
+            Console.WriteLine("1. Biseccion \n2. Posicion Falsa \n3. Punto Fijo \n4. Newton Raphson \n5. Secante \n0. Determinar el mas optimo");
+            Console.WriteLine("6. Salir");
             menu = int.Parse(Console.ReadLine());
             switch (menu)
             {
@@ -85,6 +90,22 @@ public class Consola
                     Console.WriteLine(Constantes.headerNewton);
                     mn.MetodoNewton(expreN, valInicial, toleranciaMn, maxIteraciones);
                     break;
+                case 5:
+                    Console.WriteLine("Metodo Secante");
+                    Console.WriteLine("Por favor ingrese la funcion");
+                    eqq = Console.ReadLine();
+                    var expreS = Infix.ParseOrThrow(eqq);
+                    Console.WriteLine("Ingrese el valor Inicial");
+                    double valInicialS = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese el valor de Xi-1");
+                    double valXi1S = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese la tolerancia");
+                    double toleranciaMS = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese el maximo de iteraciones");
+                    int maxIteracionesSec = int.Parse(Console.ReadLine());
+                    Console.WriteLine(Constantes.headerSecante);
+                    ms.MetodoSecanteEv(expreS, valInicialS, valXi1S, toleranciaMS, maxIteracionesSec);
+                    break;
                 case 0:
                     Console.WriteLine("Evaluando el Mejor metodo");
                     Console.WriteLine("Por favor ingrese la funcion");
@@ -99,8 +120,8 @@ public class Consola
                     var gXT = Infix.ParseOrThrow(gxT);
                     Console.WriteLine("Ingrese la posicion Inicial para el metodo Punto Fijo, Newton Raphson(Xi)");
                     double posicionPuntoFijo = double.Parse(Console.ReadLine());
-                    //Console.WriteLine("Ingrese el valor Xi-1 para el Metodo Secante");
-                    //double valXi1 = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese el valor Xi-1 para el Metodo Secante");
+                    double valXi1 = double.Parse(Console.ReadLine());
                     Console.WriteLine("Ingrese la tolerancia");
                     double toleranciaTE = double.Parse(Console.ReadLine());
                     Console.WriteLine("Ingrese la cantidad maxima de Iteraciones");
@@ -124,12 +145,19 @@ public class Consola
         
                     Console.WriteLine(Constantes.headerPuntoFijo);
                     ItersMax[2] = pf.MetodoPuntoFijoEV(gXT, posicionPuntoFijo, toleranciaTE, iteracionesMax: iterMaxT);
-
+        
                     Console.WriteLine();
                     Thread.Sleep(1000);
                     
                     Console.WriteLine(Constantes.headerNewton);
                     ItersMax[3] = mn.MetodoNewton(expre, posicionPuntoFijo, toleranciaTE, iterMaxT);
+        
+                    Console.WriteLine();
+                    
+                    Thread.Sleep(1000);
+        
+                    Console.WriteLine(Constantes.headerSecante);
+                    ItersMax[4] = ms.MetodoSecanteEv(expre, posicionPuntoFijo, valXi1, toleranciaTE, iterMaxT);
         
         
                     int min = ItersMax.Where(x => x > 0).DefaultIfEmpty(int.MinValue).Min();
@@ -152,7 +180,7 @@ public class Consola
                     break;
                     
             }
-        } while (menu != 5);
+        } while (menu != 6);
 
     }
 }
