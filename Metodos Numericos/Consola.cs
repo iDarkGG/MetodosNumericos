@@ -19,6 +19,14 @@ public class Consola
         int menu = 0;
 
         var eqq = String.Empty;
+        
+        // Console.WriteLine("Metodo de Biseccion");
+        // Console.WriteLine("Por favor ingrese la funcion");
+        // eqq = Console.ReadLine();
+        // var expreB = Infix.ParseOrThrow(eqq);
+        // Console.WriteLine(expreB);
+        // Console.WriteLine(Infix.Format(expreB));
+        // Console.WriteLine(hr.EvaluarEcuacion(expreB, 1));
 
         
 

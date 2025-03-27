@@ -15,6 +15,10 @@ public class MetodoBiseccion
                 {
                    return GenerarRaizBiseccion(limInf, limSup, xp, maxIteracion , tolerancia: tolerancia, contador: currentCount);   
                 }
+                else
+                {
+                    Console.WriteLine("WTFFFFF");
+                }
             }
         }
         

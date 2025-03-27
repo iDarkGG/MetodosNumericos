@@ -16,6 +16,10 @@ public class MetodoPosicionFalsa
                 {
                     return GenerarRaizValorFalso(limInf, limSup,  xp, raiz, currentCount: currentCount, maxIteraciones: maxIteraciones, tolerancia: tolerancia);
                 }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
             } 
         }
         
@@ -35,15 +39,17 @@ public class MetodoPosicionFalsa
 
             if (evRaiz < 0)
             {
-                var result1 = hr.EvaluarEcuacion(exp, limInf);
-                if (result1.ToString().Contains('-'))
-                {
-                    hr.TableBuilderValorFalso(currentCount, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
-                        hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz,
-                        hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount));
-                   return  MetodoPosicionFalsoEV(exp, raiz, limSup, tolerancia, RaizAnterior: raiz, currentCount: currentCount,
-                        tolResult: hr.ErrorAproximadoPorcentual(raiz, raizAnterior), maxIteraciones: maxIteraciones);
-                }
+                hr.TableBuilderValorFalso(currentCount, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
+                    hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz,
+                    hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount));
+                return MetodoPosicionFalsoEV(exp, raiz, limSup, tolerancia, RaizAnterior: raiz,
+                    currentCount: currentCount,
+                    tolResult: hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount),
+                    maxIteraciones: maxIteraciones);
+            }
+            else
+            {
+            
                 hr.TableBuilderValorFalso(currentCount, raiz, limSup, hr.EvaluarEcuacion(exp, raiz),
                     hr.EvaluarEcuacion(exp, limSup), raiz, evRaiz,
                     hr.ErrorAproximadoPorcentual(raiz, raizAnterior, currentCount));
