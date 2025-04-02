@@ -1,5 +1,6 @@
 ﻿using MathNet.Symbolics;
 using Expr = MathNet.Symbolics.Expression;
+using MathNet.Numerics;
 using System.Linq;
 
 namespace Metodos_Numericos;
@@ -17,18 +18,31 @@ public class Consola
         HerramientasCalculo hr = new HerramientasCalculo();
         
         int menu = 0;
+        //
+        // List<Expr> results = new List<Expr>();
+        // List<double> valores = new List<double>();
+         var eqq = String.Empty;
+        // // var x = new Dictionary<string, FloatingPoint>
+        // // {
+        // //     { "x", 0.5 }
+        // // };
+        // var x = Expr.Symbol("x");
+        // for (int i = 0; i < 3; i++)
+        // {
+        //     Console.WriteLine("Ingrese la ecuacion num: "+(i+1));
+        //     eqq = Console.ReadLine();
+        //     results.Add(Infix.ParseOrThrow(eqq));
+        //     Console.WriteLine("Ingrese el valor inicial: "+(i+1));
+        //     double valorInicial = Convert.ToDouble(Console.ReadLine());
+        //     valores.Add(valorInicial);
+        // }
 
-        var eqq = String.Empty;
-        
-        // Console.WriteLine("Metodo de Biseccion");
-        // Console.WriteLine("Por favor ingrese la funcion");
+        // Console.WriteLine("Ingrese la ecuacion num: ");
         // eqq = Console.ReadLine();
-        // var expreB = Infix.ParseOrThrow(eqq);
-        // Console.WriteLine(expreB);
-        // Console.WriteLine(Infix.Format(expreB));
-        // Console.WriteLine(hr.EvaluarEcuacion(expreB, 1));
-
-        
+        // var expre = Infix.ParseOrThrow(eqq);
+        // Console.WriteLine(Infix.Format(expre));
+        // Console.WriteLine(Evaluate.Evaluate(x, expre));
+        //Console.WriteLine(hr.MatrizJacobiana(results, valores, 3));
 
         do
         {

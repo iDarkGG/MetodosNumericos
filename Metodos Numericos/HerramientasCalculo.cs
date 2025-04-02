@@ -1,6 +1,7 @@
 ﻿using MathNet.Symbolics;
 using Expr = MathNet.Symbolics.Expression ;
-using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra;
+
 namespace Metodos_Numericos;
 
 public class HerramientasCalculo
@@ -50,7 +51,7 @@ public class HerramientasCalculo
         Console.WriteLine(row);
     }
 
-    public Expression ExpressionSintax(string Ecuacion)
+    public Expr ExpressionSintax(string Ecuacion)
     {
         string[] expre = [""];
         if (Ecuacion.Contains('='))
@@ -62,7 +63,7 @@ public class HerramientasCalculo
         return Infix.ParseOrThrow(Ecuacion);
     }
     
-    public double EvaluarEcuacion(Expression exp, double termino)
+    public double EvaluarEcuacion(Expr exp, double termino)
     {
         double result = 0d;
         var simbolos = new Dictionary<string, FloatingPoint>{ {"x", termino} };
@@ -78,7 +79,7 @@ public class HerramientasCalculo
         return result;
     }
 
-    public bool VerificadorBolzano(Expression xp, double limInf, double limSup)
+    public bool VerificadorBolzano(Expr xp, double limInf, double limSup)
     {
         return (EvaluarEcuacion(xp, limInf) * EvaluarEcuacion(xp, limSup)) < 0;
     }
@@ -93,11 +94,11 @@ public class HerramientasCalculo
 
     public double EvaluarDerivada(Expr exp, double termino)
     {
-        Expression x = Expr.Symbol("x");
+        Expr x = Expr.Symbol("x");
         try
         {
+            
             var derivative = Calculus.Differentiate(x, exp);
-
             return EvaluarEcuacion(derivative, termino);
         }
         catch (Exception e)
@@ -106,7 +107,94 @@ public class HerramientasCalculo
             return double.NaN;
         }
     }
-    
 
+    public Matrix<double> MatrizJacobiana(List<Expr> exps, List<double> values, int n)
+    {
+        var valores2 = new Dictionary<string, FloatingPoint>
+        {
+            { "x", values[0]},
+            { "y", values[1] }
+        };
+        var valores3 = new Dictionary<string, FloatingPoint>
+        {
+            { "x", values[0] },
+            { "y", values[1] },
+            { "z", values[2] }
+        };
+        List<Expression> resultDerivada = new List<Expression>();
+        var matrix = Matrix<double>.Build.Dense(n, n);
+        EvaluarDerivada(exps, n);
+        switch (n)
+        {
+            case 2:
+                if ((resultDerivada.Count > 4 & exps.Count==2) | (resultDerivada.Count < 4 & exps.Count==2))
+                {
+                    throw new Exception(
+                        "Las derivadas resultantes no pueden ser mayor a la cantidad de ecuaciones/funciones");
+                }
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        matrix[i, j] = Evaluate.Evaluate(valores2, resultDerivada[j]).RealValue;
+                        if (i == 1)
+                        {
+                            matrix[i, j] = Evaluate.Evaluate(valores2, resultDerivada[j+2]).RealValue;
+                        }
+                    }
+                }
+                break;
+            case 3:
+                if ((resultDerivada.Count > 6 & exps.Count!=3) | (resultDerivada.Count < 6 & exps.Count!=3))
+                {
+                    throw new Exception(
+                        "Las derivadas resultantes no pueden ser mayor a la cantidad de ecuaciones/funciones");
+                }
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        matrix[i, j] = Evaluate.Evaluate(valores3, resultDerivada[j]).RealValue;
+                        if (i == 2)
+                        {
+                            matrix[i, j] = Evaluate.Evaluate(valores3, resultDerivada[j+6]).RealValue;
+                        }
+                    }
+                }
+                break;
+        }
+        //var inversa = matrix.Inverse();
+        return matrix;
+    }
+
+    public List<Expr> EvaluarDerivada(List<Expr> xp, int n)
+    {
+        List<Expr> results = new List<Expr>();
+        if (n == 2)
+        {
+            results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[0]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[0]));
+            //2
+            results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[1]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[1]));
+            return results;
+        }
+        if (n == 3)
+        {
+            results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[0]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[0]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("z"), xp[0]));
+            //2
+            results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[1]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[1]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("z"), xp[1]));
+            //3
+            results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[2]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[2]));
+            results.Add(Calculus.Differentiate(Expr.Symbol("z"), xp[2]));
+        }
+        
+        return results;
+    }
 }
    
