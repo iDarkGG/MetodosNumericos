@@ -87,7 +87,7 @@ public class HerramientasCalculo
     public double ErrorAproximadoPorcentual(double NuevaRaiz, double RaizAnterior, int contador=0)
     {
         if (contador <= 1) return 100d;
-        var result = ((NuevaRaiz - RaizAnterior) / NuevaRaiz) * 100;
+        var result = ((Math.Abs(NuevaRaiz) - Math.Abs(RaizAnterior)) / NuevaRaiz) * 100;
         return Math.Abs(result);
     }
 
@@ -110,24 +110,29 @@ public class HerramientasCalculo
 
     public Matrix<double> MatrizJacobiana(List<Expr> exps, List<double> values, int n)
     {
+        var valores3 = new Dictionary<string, FloatingPoint>();
         var valores2 = new Dictionary<string, FloatingPoint>
         {
             { "x", values[0]},
             { "y", values[1] }
         };
-        var valores3 = new Dictionary<string, FloatingPoint>
+        if (n == 3)
         {
-            { "x", values[0] },
-            { "y", values[1] },
-            { "z", values[2] }
-        };
-        List<Expression> resultDerivada = new List<Expression>();
+             valores3 = new Dictionary<string, FloatingPoint>
+            {
+                { "x", values[0] },
+                { "y", values[1] },
+                { "z", values[2] }
+            };
+        }
+
+        List<Expression> resultDerivada = EvaluarDerivada(exps, n);
         var matrix = Matrix<double>.Build.Dense(n, n);
-        EvaluarDerivada(exps, n);
+        
         switch (n)
         {
             case 2:
-                if ((resultDerivada.Count > 4 & exps.Count==2) | (resultDerivada.Count < 4 & exps.Count==2))
+                if ((resultDerivada.Count > 4 & exps.Count!=2) | (resultDerivada.Count < 4 & exps.Count!=2))
                 {
                     throw new Exception(
                         "Las derivadas resultantes no pueden ser mayor a la cantidad de ecuaciones/funciones");
@@ -163,8 +168,8 @@ public class HerramientasCalculo
                 }
                 break;
         }
-        //var inversa = matrix.Inverse();
-        return matrix;
+        var inversa = matrix.Inverse();
+        return inversa;
     }
 
     public List<Expr> EvaluarDerivada(List<Expr> xp, int n)
@@ -177,7 +182,6 @@ public class HerramientasCalculo
             //2
             results.Add(Calculus.Differentiate(Expr.Symbol("x"), xp[1]));
             results.Add(Calculus.Differentiate(Expr.Symbol("y"), xp[1]));
-            return results;
         }
         if (n == 3)
         {
@@ -195,6 +199,47 @@ public class HerramientasCalculo
         }
         
         return results;
+    }
+
+
+    public Matrix<double> MatrizEvaluacion(List<Expr> xp, List<double> values)
+    {
+        
+        Matrix<double> resultSet= Matrix<double>.Build.Dense(2, 1);
+        switch (values.Count)
+        {
+            case 2:
+                var valores2 = new Dictionary<string, FloatingPoint>
+                {
+                    { "x", values[0]},
+                    { "y", values[1] }
+                };
+                for (int i = 0; i < values.Count(); i++)
+                {
+                    resultSet[i, 0] = Evaluate.Evaluate(valores2, xp[i]).RealValue;
+                }
+                break;
+        }
+        return resultSet;
+    }
+
+
+    public string PrintMatrix(Matrix<double> matrix, int n)
+    {
+        var x = String.Empty;
+        if (n == 2)
+        {
+           x = matrix[0, 0] + " | " + matrix[0, 1]+"|\n"+
+               matrix[1, 0] + " | " + matrix[1, 1]+"|";
+        }
+        else
+        {
+            x = matrix[0, 0] + " | " + matrix[0, 1] + " | " + matrix[0, 2]+"|\n"+
+                matrix[1, 0] + " | " + matrix[1, 1] + " | " + matrix[1, 2]+"|\n"+
+                matrix[2, 0] + " | " + matrix[2, 1] + " | " + matrix[3, 2]+"|";
+        }
+
+        return x;
     }
 }
    

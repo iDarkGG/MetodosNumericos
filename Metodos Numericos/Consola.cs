@@ -16,39 +16,43 @@ public class Consola
         MetodoNewtonRaphson mn = new MetodoNewtonRaphson();
         MetodoSecante ms = new MetodoSecante();
         HerramientasCalculo hr = new HerramientasCalculo();
-        
+        MetodoNewtonRaphsonSenl mns = new MetodoNewtonRaphsonSenl();
         int menu = 0;
         //
-        // List<Expr> results = new List<Expr>();
-        // List<double> valores = new List<double>();
+         List<Expr> results = new List<Expr>();
+        List<double> valores = new List<double>();
          var eqq = String.Empty;
-        // // var x = new Dictionary<string, FloatingPoint>
-        // // {
-        // //     { "x", 0.5 }
-        // // };
-        // var x = Expr.Symbol("x");
-        // for (int i = 0; i < 3; i++)
+        // var x = new Dictionary<string, FloatingPoint>
         // {
-        //     Console.WriteLine("Ingrese la ecuacion num: "+(i+1));
-        //     eqq = Console.ReadLine();
-        //     results.Add(Infix.ParseOrThrow(eqq));
-        //     Console.WriteLine("Ingrese el valor inicial: "+(i+1));
-        //     double valorInicial = Convert.ToDouble(Console.ReadLine());
-        //     valores.Add(valorInicial);
+        //     { "x", 0.5 }
+        // };
+        //  //var x = Expr.Symbol("x");
+        //  for (int i = 0; i < 2; i++)
+        //  {
+        //      Console.WriteLine("Ingrese la ecuacion num: "+(i+1));
+        //      eqq = Console.ReadLine();
+        //      results.Add(Infix.ParseOrThrow(eqq));
+        //      Console.WriteLine("Ingrese el valor");
+        //      valores.Add(double.Parse(Console.ReadLine()));
+        //  }
+        //  
+        //  Console.WriteLine("Ingrese la ecuacion num: ");
+        //  eqq = Console.ReadLine();
+        //  //var expre = Infix.ParseOrThrow(eqq);
+        // // Console.WriteLine(Infix.Format(expre));
+        //  //Console.WriteLine(Evaluate.Evaluate(x, expre));
+        // //Console.WriteLine(hr.MatrizJacobiana(results, valores, 2));
+        // Console.WriteLine(hr.MatrizJacobiana(results, valores ,2));
+        // foreach (var item in hr.EvaluarDerivada(results, 2))
+        // {
+        //     Console.WriteLine(Infix.Format(item));
         // }
-
-        // Console.WriteLine("Ingrese la ecuacion num: ");
-        // eqq = Console.ReadLine();
-        // var expre = Infix.ParseOrThrow(eqq);
-        // Console.WriteLine(Infix.Format(expre));
-        // Console.WriteLine(Evaluate.Evaluate(x, expre));
-        //Console.WriteLine(hr.MatrizJacobiana(results, valores, 3));
 
         do
         {
             Console.WriteLine("Por favor seleccione el Metodo con el que aproximar");
-            Console.WriteLine("1. Biseccion \n2. Posicion Falsa \n3. Punto Fijo \n4. Newton Raphson \n5. Secante \n0. Determinar el mas optimo");
-            Console.WriteLine("6. Salir");
+            Console.WriteLine("1. Biseccion \n2. Posicion Falsa \n3. Punto Fijo \n4. Newton Raphson \n5. Secante  \n6. Newton Raphson-SENL\n0. Determinar el mas optimo");
+            Console.WriteLine("7. Salir");
             menu = int.Parse(Console.ReadLine());
             switch (menu)
             {
@@ -128,6 +132,26 @@ public class Consola
                     Console.WriteLine(Constantes.headerSecante);
                     ms.MetodoSecanteEv(expreS, valInicialS, valXi1S, toleranciaMS, maxIteracionesSec);
                     break;
+                case 6:
+                    Console.WriteLine("Metodo Newton-Raphson SENL");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Console.WriteLine("Ingrese la ecuacion num: "+(i+1));
+                        eqq = Console.ReadLine();
+                        results.Add(Infix.ParseOrThrow(eqq));
+                        Console.WriteLine("Ingrese el valor inicial: "+(i+1));
+                        double valorInicial = Convert.ToDouble(Console.ReadLine());
+                        valores.Add(valorInicial);
+                    }
+                    Console.WriteLine("Ingrese la tolerancia");
+                    double toleranciaSENL = double.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese el maximo de iteraciones");
+                    maxIteraciones = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Iteracion       | Xi        |  J(Xi-1)^-1     | F(Xi-1)|   Xr[]    | Er%");
+                    mns.MetodoNewtonSenl(results, valores, toleranciaSENL, maxIteraciones);
+                    results.Clear();
+                    valores.Clear();
+                    break;
                 case 0:
                     Console.WriteLine("Evaluando el Mejor metodo");
                     Console.WriteLine("Por favor ingrese la funcion");
@@ -202,7 +226,7 @@ public class Consola
                     break;
                     
             }
-        } while (menu != 6);
+        } while (menu != 7);
 
     }
 }
