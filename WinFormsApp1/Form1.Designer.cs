@@ -138,7 +138,7 @@ partial class Form1
         // 
         // listView1
         // 
-        listView1.Location = new System.Drawing.Point(325, 50);
+        listView1.Location = new System.Drawing.Point(313, 36);
         listView1.Name = "listView1";
         listView1.Size = new System.Drawing.Size(463, 296);
         listView1.TabIndex = 10;
@@ -189,7 +189,7 @@ partial class Form1
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(800, 450);
+        ClientSize = new System.Drawing.Size(854, 480);
         Controls.Add(btnChckSyntax);
         Controls.Add(groupBox1);
         Controls.Add(listView1);
@@ -203,6 +203,7 @@ partial class Form1
         Controls.Add(label1);
         Controls.Add(textBox2);
         Controls.Add(txtFuncion);
+        FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
         MaximizeBox = false;
         Text = "Form1";
         Load += Form1_Load;

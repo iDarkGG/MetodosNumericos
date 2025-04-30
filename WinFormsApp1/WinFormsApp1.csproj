@@ -12,4 +12,10 @@
       <ProjectReference Include="..\Metodos Numericos\Metodos Numericos.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="MainForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>
