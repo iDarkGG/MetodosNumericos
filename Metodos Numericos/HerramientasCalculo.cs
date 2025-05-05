@@ -92,6 +92,18 @@ public class HerramientasCalculo
     }
 
 
+    public string StringSyntax(Expr expr)
+    {
+        return Infix.Format(expr);
+    }
+
+    public Expression DerivativeSyntax(Expr expr)
+    {
+        Expr x1 = Expr.Symbol("x");
+
+        return Calculus.Differentiate(x1, expr);
+    }
+
     public double EvaluarDerivada(Expr exp, double termino)
     {
         Expr x = Expr.Symbol("x");
@@ -99,6 +111,7 @@ public class HerramientasCalculo
         {
             
             var derivative = Calculus.Differentiate(x, exp);
+            
             return EvaluarEcuacion(derivative, termino);
         }
         catch (Exception e)

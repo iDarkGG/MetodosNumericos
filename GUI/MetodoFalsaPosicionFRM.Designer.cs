@@ -1,0 +1,278 @@
+﻿namespace WinFormsApp1;
+
+partial class MetodoFalsaPosicionFRM
+{
+    /// <summary>
+    ///  Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    ///  Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && (components != null))
+        {
+            components.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    #region Windows Form Designer generated code
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MetodoFalsaPosicionFRM));
+        txtFuncion = new System.Windows.Forms.TextBox();
+        txtLimInf = new System.Windows.Forms.TextBox();
+        label1 = new System.Windows.Forms.Label();
+        txtLimSup = new System.Windows.Forms.TextBox();
+        label2 = new System.Windows.Forms.Label();
+        label3 = new System.Windows.Forms.Label();
+        label4 = new System.Windows.Forms.Label();
+        label5 = new System.Windows.Forms.Label();
+        txtTolerancia = new System.Windows.Forms.TextBox();
+        label6 = new System.Windows.Forms.Label();
+        lstResultados = new System.Windows.Forms.ListView();
+        btnChckSyntax = new System.Windows.Forms.Button();
+        btnSave = new System.Windows.Forms.Button();
+        btnGrafico = new System.Windows.Forms.Button();
+        btnCalcular = new System.Windows.Forms.Button();
+        btnSalir = new System.Windows.Forms.Button();
+        label7 = new System.Windows.Forms.Label();
+        SuspendLayout();
+        // 
+        // txtFuncion
+        // 
+        txtFuncion.Location = new System.Drawing.Point(60, 69);
+        txtFuncion.Name = "txtFuncion";
+        txtFuncion.Size = new System.Drawing.Size(165, 23);
+        txtFuncion.TabIndex = 0;
+        // 
+        // txtLimInf
+        // 
+        txtLimInf.Location = new System.Drawing.Point(82, 160);
+        txtLimInf.Name = "txtLimInf";
+        txtLimInf.Size = new System.Drawing.Size(40, 23);
+        txtLimInf.TabIndex = 1;
+        // 
+        // label1
+        // 
+        label1.Font = new System.Drawing.Font("Microsoft Uighur", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label1.Location = new System.Drawing.Point(56, 155);
+        label1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 1);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(20, 23);
+        label1.TabIndex = 2;
+        label1.Text = "[";
+        label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+        // 
+        // txtLimSup
+        // 
+        txtLimSup.Location = new System.Drawing.Point(151, 160);
+        txtLimSup.Name = "txtLimSup";
+        txtLimSup.Size = new System.Drawing.Size(40, 23);
+        txtLimSup.TabIndex = 3;
+        // 
+        // label2
+        // 
+        label2.Font = new System.Drawing.Font("Microsoft Uighur", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label2.Location = new System.Drawing.Point(128, 160);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(20, 23);
+        label2.TabIndex = 4;
+        label2.Text = "-";
+        label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+        // 
+        // label3
+        // 
+        label3.Font = new System.Drawing.Font("Microsoft Uighur", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label3.Location = new System.Drawing.Point(197, 155);
+        label3.Name = "label3";
+        label3.Size = new System.Drawing.Size(20, 23);
+        label3.TabIndex = 5;
+        label3.Text = "]";
+        label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+        // 
+        // label4
+        // 
+        label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label4.ForeColor = System.Drawing.SystemColors.ControlText;
+        label4.Location = new System.Drawing.Point(78, 123);
+        label4.Name = "label4";
+        label4.Size = new System.Drawing.Size(113, 22);
+        label4.TabIndex = 6;
+        label4.Text = "INTERVALO";
+        // 
+        // label5
+        // 
+        label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label5.ForeColor = System.Drawing.SystemColors.ControlText;
+        label5.Location = new System.Drawing.Point(88, 44);
+        label5.Name = "label5";
+        label5.Size = new System.Drawing.Size(113, 22);
+        label5.TabIndex = 7;
+        label5.Text = "FUNCION";
+        // 
+        // txtTolerancia
+        // 
+        txtTolerancia.Location = new System.Drawing.Point(108, 232);
+        txtTolerancia.Name = "txtTolerancia";
+        txtTolerancia.Size = new System.Drawing.Size(40, 23);
+        txtTolerancia.TabIndex = 8;
+        // 
+        // label6
+        // 
+        label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label6.ForeColor = System.Drawing.SystemColors.ControlText;
+        label6.Location = new System.Drawing.Point(60, 207);
+        label6.Name = "label6";
+        label6.Size = new System.Drawing.Size(135, 22);
+        label6.TabIndex = 9;
+        label6.Text = "TOLERANCIA %";
+        // 
+        // lstResultados
+        // 
+        lstResultados.Location = new System.Drawing.Point(313, 44);
+        lstResultados.Name = "lstResultados";
+        lstResultados.Size = new System.Drawing.Size(529, 333);
+        lstResultados.TabIndex = 10;
+        lstResultados.UseCompatibleStateImageBehavior = false;
+        // 
+        // btnChckSyntax
+        // 
+        btnChckSyntax.BackColor = System.Drawing.Color.White;
+        btnChckSyntax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        btnChckSyntax.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        btnChckSyntax.Location = new System.Drawing.Point(231, 69);
+        btnChckSyntax.Name = "btnChckSyntax";
+        btnChckSyntax.Size = new System.Drawing.Size(76, 23);
+        btnChckSyntax.TabIndex = 12;
+        btnChckSyntax.Text = "chckSyntax";
+        btnChckSyntax.UseVisualStyleBackColor = false;
+        btnChckSyntax.Click += btnChckSyntax_Click;
+        // 
+        // btnSave
+        // 
+        btnSave.BackColor = System.Drawing.Color.White;
+        btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        btnSave.Location = new System.Drawing.Point(686, 400);
+        btnSave.Name = "btnSave";
+        btnSave.Size = new System.Drawing.Size(87, 24);
+        btnSave.TabIndex = 13;
+        btnSave.Text = "Guardar CSV";
+        btnSave.UseVisualStyleBackColor = false;
+        btnSave.Click += btnSave_Click;
+        // 
+        // btnGrafico
+        // 
+        btnGrafico.BackColor = System.Drawing.Color.White;
+        btnGrafico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        btnGrafico.Location = new System.Drawing.Point(779, 400);
+        btnGrafico.Name = "btnGrafico";
+        btnGrafico.Size = new System.Drawing.Size(63, 24);
+        btnGrafico.TabIndex = 14;
+        btnGrafico.Text = "Grafico";
+        btnGrafico.UseVisualStyleBackColor = false;
+        // 
+        // btnCalcular
+        // 
+        btnCalcular.BackColor = System.Drawing.Color.White;
+        btnCalcular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        btnCalcular.Location = new System.Drawing.Point(88, 279);
+        btnCalcular.Name = "btnCalcular";
+        btnCalcular.Size = new System.Drawing.Size(129, 47);
+        btnCalcular.TabIndex = 15;
+        btnCalcular.Text = "Calcular";
+        btnCalcular.UseVisualStyleBackColor = false;
+        btnCalcular.Click += btnCalcular_Click;
+        // 
+        // btnSalir
+        // 
+        btnSalir.Image = ((System.Drawing.Image)resources.GetObject("btnSalir.Image"));
+        btnSalir.Location = new System.Drawing.Point(814, 445);
+        btnSalir.Name = "btnSalir";
+        btnSalir.Size = new System.Drawing.Size(28, 23);
+        btnSalir.TabIndex = 16;
+        btnSalir.UseVisualStyleBackColor = true;
+        btnSalir.Click += btnSalir_Click;
+        // 
+        // label7
+        // 
+        label7.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        label7.Location = new System.Drawing.Point(264, 9);
+        label7.Name = "label7";
+        label7.Size = new System.Drawing.Size(216, 32);
+        label7.TabIndex = 17;
+        label7.Text = "FALSA POSICION";
+        label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        // 
+        // MetodoFalsaPosicionFRM
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = System.Drawing.Color.Gray;
+        ClientSize = new System.Drawing.Size(854, 480);
+        Controls.Add(label7);
+        Controls.Add(btnSalir);
+        Controls.Add(btnCalcular);
+        Controls.Add(btnGrafico);
+        Controls.Add(btnSave);
+        Controls.Add(btnChckSyntax);
+        Controls.Add(lstResultados);
+        Controls.Add(label6);
+        Controls.Add(txtTolerancia);
+        Controls.Add(label5);
+        Controls.Add(label4);
+        Controls.Add(label3);
+        Controls.Add(label2);
+        Controls.Add(txtLimSup);
+        Controls.Add(label1);
+        Controls.Add(txtLimInf);
+        Controls.Add(txtFuncion);
+        FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+        MaximizeBox = false;
+        Text = "MetodoBiseccion";
+        Load += Form1_Load;
+        ResumeLayout(false);
+        PerformLayout();
+    }
+
+    private System.Windows.Forms.Label label7;
+
+    private System.Windows.Forms.Button btnSalir;
+
+    private System.Windows.Forms.Button btnSave;
+
+    private System.Windows.Forms.Button btnCalcular;
+    private System.Windows.Forms.Button btnGrafico;
+
+    private System.Windows.Forms.Button btnChckSyntax;
+
+    private System.Windows.Forms.ListView lstResultados;
+
+    private System.Windows.Forms.TextBox txtTolerancia;
+    private System.Windows.Forms.Label label6;
+
+    private System.Windows.Forms.Label label5;
+
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label4;
+
+    private System.Windows.Forms.TextBox txtLimSup;
+    private System.Windows.Forms.Label label2;
+
+    private System.Windows.Forms.Label label1;
+
+    private System.Windows.Forms.TextBox txtFuncion;
+    private System.Windows.Forms.TextBox txtLimInf;
+
+    #endregion
+}

@@ -22,7 +22,6 @@ public class MetodoNewtonRaphsonSenl
             if (currentErrorMatrix[0,0] > tolerancia | currentErrorMatrix[1,0] > tolerancia)
             {
                 currentCount++;
-                List<double> raices = new List<double>();
 
                 Matrix<double> XoMatrix = Matrix<double>.Build.Dense(2, 1);
                 List<double> nextXo = new List<double>();
