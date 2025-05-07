@@ -68,7 +68,7 @@ public partial class MainForm : Form
 
     private void btnSecante_Click(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+       AbrirFormEnPanel(new MetodoSecanteFRM());
     }
 
     private void btnMenuAbiertos_Click(object sender, EventArgs e)
@@ -146,7 +146,7 @@ public partial class MainForm : Form
 
     private void btnHerramientas_Click(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        MessageBox.Show("PROXIMAMENTE");
     }
 
     private void btnFP_Click(object sender, EventArgs e)

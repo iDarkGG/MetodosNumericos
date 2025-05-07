@@ -8,6 +8,7 @@ namespace Metodos_Numericos;
 public class MetodoNewtonRaphsonSenl
 {
     HerramientasCalculo hr = new HerramientasCalculo();
+    NewtonRaphsonSENL_IO nr = new NewtonRaphsonSENL_IO(); 
     public int MetodoNewtonSenl(List<Expression> exp, List<double> Xo, double tolerancia, int maxIter = 0, int currentCount = 0,
         Matrix<double> currentErrorMatrix = null)
     {
@@ -44,6 +45,7 @@ public class MetodoNewtonRaphsonSenl
                     errorMatrix[l, 0] = hr.ErrorAproximadoPorcentual(result[l, 0], Xo[l],currentCount);
                 }
                 Console.WriteLine("----------------------------------------------------------------------");    
+                nr.Agregar(new NewtonRaphsonSENL_IO(exp, Xo,hr.MatrizEvaluacion(exp,Xo),hr.MatrizJacobiana(exp,Xo,2),errorMatrix, currentCount, result));
                  for (int countR = 0; countR < currentErrorMatrix.RowCount; countR++)
                  {
                      for (int countC = 0; countC < currentErrorMatrix.ColumnCount; countC++)

@@ -4,6 +4,7 @@ namespace Metodos_Numericos;
 
 public class MetodoSecante
 {
+    SecanteIO sec = new SecanteIO();
 
     HerramientasCalculo hr = new HerramientasCalculo();
 
@@ -22,13 +23,16 @@ public class MetodoSecante
     }
 
     public int GenerarRaizSecante(Expression exp, double Xi, double Xo, double tolerancia, int maxIteraciones = 0,
-        int currentCount = 0, double currentError = 0, double xAnterior = 0)
+        int currentCount = 0, double currentError = 0)
     {
         currentCount++;
 
         hr.EvaluarEcuacion(exp, Xi);
         double raiz = Xi - (hr.EvaluarEcuacion(exp, Xi)*(Xo - Xi) / (hr.EvaluarEcuacion(exp, Xo)-hr.EvaluarEcuacion(exp, Xi)));
         double error = hr.ErrorAproximadoPorcentual(raiz, Xi, currentCount);
+        
+        sec.Agregar(new SecanteIO(exp,Xi,hr.EvaluarEcuacion(exp, Xi), error, currentCount, raiz));
+        
         hr.TableBuilderSecante(currentCount, raiz, Xi, hr.EvaluarEcuacion(exp, Xi), hr.EvaluarEcuacion(exp, Xo), raiz, error);
         return MetodoSecanteEv(exp, raiz, Xi, tolerancia, maxIteraciones, currentCount, currentError: error);   
 

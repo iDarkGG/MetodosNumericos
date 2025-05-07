@@ -7,9 +7,9 @@ namespace WinFormsApp1;
 public partial class MetodoNR_SENL_FRM : Form
 {
     Herramientas hr = new Herramientas();
-    MetodoNewtonRaphsonSenl frm = new MetodoNewtonRaphsonSenl();
     HerramientasCalculo ha = new HerramientasCalculo();
-    NewtonRaphsonIO io = new NewtonRaphsonIO();
+    private NewtonRaphsonSENL_IO nr = new NewtonRaphsonSENL_IO();
+    private MetodoNewtonRaphsonSenl nrs = new MetodoNewtonRaphsonSenl();
     public MetodoNR_SENL_FRM()
     {
         InitializeComponent();
@@ -52,7 +52,7 @@ public partial class MetodoNR_SENL_FRM : Form
         lstResultados.Columns.Add("Iteracion", 60, HorizontalAlignment.Center);
         lstResultados.Columns.Add("Xi",102,HorizontalAlignment.Center);
         lstResultados.Columns.Add("f(Xi)",102,HorizontalAlignment.Center);
-        lstResultados.Columns.Add("f'(Xi)",102,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("J(x-1)^-1",102,HorizontalAlignment.Center);
         lstResultados.Columns.Add("Raiz Aprox",102,HorizontalAlignment.Center);
         lstResultados.Columns.Add("Error Aprox",102,HorizontalAlignment.Center);
         lstResultados.GridLines = true;
@@ -93,7 +93,7 @@ public partial class MetodoNR_SENL_FRM : Form
         {
             using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
             {
-                foreach (var line in io.CSV_Syntax(eq1))
+                foreach (var line in nr.CSV_Syntax(eq1))
                 {
                     sw.WriteLine(line);
                 }
@@ -106,6 +106,10 @@ public partial class MetodoNR_SENL_FRM : Form
 
     private void btnCalcular_Click(object sender, EventArgs e)
     {
+        //TEMP
+        controls.Remove(txtPI3);
+        controls.Remove(txtSENL3);
+        
         List<Expression> expressions = new List<Expression>();
         expressions.Add(Infix.ParseOrThrow(txtSENL1.Text));
         expressions.Add(Infix.ParseOrThrow(txtSENL2.Text));
@@ -115,14 +119,14 @@ public partial class MetodoNR_SENL_FRM : Form
         xi.Add(Convert.ToDouble(txtPI2.Text));
         if (hr.TextBoxChecker(controls))
         {
-            MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
             var eqq = Infix.ParseOrThrow(txtSENL1.Text);
             try
-            {
-                frm.MetodoNewtonSenl(expressions, xi, Convert.ToDouble(txtTolerancia.Text), maxIter: 100);
+            {   
+                nrs.MetodoNewtonSenl(expressions, xi, Convert.ToDouble(txtTolerancia.Text), maxIter: 100);
             }
             catch (Exception ex)
             {
@@ -131,14 +135,22 @@ public partial class MetodoNR_SENL_FRM : Form
             }
 
             ListViewItem lst = new ListViewItem();
-            foreach (var data in io.Copy())
+            foreach (var data in nr.Copy())
             {
                 lst = new ListViewItem(data.Contador.ToString());
-                lst.SubItems.Add(data.Xi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.fXi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.fPrimeXi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.Result.ToString(CultureInfo.CurrentCulture));
-                lst.SubItems.Add(data.Error.ToString(CultureInfo.CurrentCulture)+"%");
+                lst.SubItems.Add(data.Xi[0].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.fXi[0,0].ToString(CultureInfo.InvariantCulture)+" "+data.fXi[1,0].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.jacobiano[0,0].ToString(CultureInfo.InvariantCulture)+" "+data.jacobiano[0,1].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.Result[0,0].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.Error[0,0].ToString(CultureInfo.InvariantCulture)+"%");
+                lstResultados.Items.Add(lst);
+                
+                lst = new ListViewItem(data.Contador.ToString());
+                lst.SubItems.Add(data.Xi[1].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.fXi[1,0].ToString(CultureInfo.InvariantCulture)+" "+data.fXi[1,0].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.jacobiano[1,0].ToString(CultureInfo.InvariantCulture)+" "+data.jacobiano[1,1].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.Result[1,0].ToString(CultureInfo.InvariantCulture));
+                lst.SubItems.Add(data.Error[1,0].ToString(CultureInfo.InvariantCulture)+"%");
                 lstResultados.Items.Add(lst);
             }
             
@@ -153,15 +165,17 @@ public partial class MetodoNR_SENL_FRM : Form
             e.DrawDefault = true;
         };
 
-        lstResultados.DrawItem += (s, e) =>
-        {
-        };
+        lstResultados.DrawItem += (s, e) => { };
 
         lstResultados.DrawSubItem += (s, e) =>
         {
             int lastRowIndex = lstResultados.Items.Count - 1;
-            
-            if (e.ItemIndex == lastRowIndex && (e.ColumnIndex == 1 || e.ColumnIndex == 2 || e.ColumnIndex==3 || e.ColumnIndex == 4 || e.ColumnIndex == 5))
+            int secondLast = lstResultados.Items.Count - 2;
+
+            bool isTargetRow = e.ItemIndex == lastRowIndex || e.ItemIndex == secondLast;
+            bool isTargetColumn = e.ColumnIndex >= 1 && e.ColumnIndex <= 5;
+
+            if (isTargetRow && isTargetColumn)
             {
                 e.Graphics.FillRectangle(Brushes.LightGreen, e.Bounds);
                 TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lstResultados.Font, e.Bounds, Color.Black, TextFormatFlags.HorizontalCenter);
@@ -171,6 +185,7 @@ public partial class MetodoNR_SENL_FRM : Form
                 e.DrawDefault = true;
             }
         };
+
 
 
 
