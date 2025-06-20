@@ -4,13 +4,12 @@ using Metodos_Numericos;
 
 namespace WinFormsApp1;
 
-public partial class MetodoNR_FRM : Form
+public partial class MetodoRungeKuttaFRM : Form
 {
     Herramientas hr = new Herramientas();
-    MetodoNewtonRaphson mn = new MetodoNewtonRaphson();
-    HerramientasCalculo ha = new HerramientasCalculo();
-    NewtonRaphsonIO io = new NewtonRaphsonIO();
-    public MetodoNR_FRM()
+    private MetodoRungeKutta_4 mr = new MetodoRungeKutta_4();
+    private RungeKuttaIO rIO = new RungeKuttaIO();
+    public MetodoRungeKuttaFRM()
     {
         InitializeComponent();
     }
@@ -31,17 +30,18 @@ public partial class MetodoNR_FRM : Form
     
     private void Form1_Load(object sender, EventArgs e)
     {
-        io.Cleaner();
+        rIO.Cleaner();
         foreach (Control control in this.Controls)
         {   
             controls.Add(control);
         }
         lstResultados.Columns.Add("Iteracion", 60, HorizontalAlignment.Center);
-        lstResultados.Columns.Add("Xi",102,HorizontalAlignment.Center);
-        lstResultados.Columns.Add("f(Xi)",102,HorizontalAlignment.Center);
-        lstResultados.Columns.Add("f'(Xi)",102,HorizontalAlignment.Center);
-        lstResultados.Columns.Add("Raiz Aprox",102,HorizontalAlignment.Center);
-        lstResultados.Columns.Add("Error Aprox",102,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("xi",78,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("yi",78,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("k1",78,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("k2",78,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("k3",78,HorizontalAlignment.Center);
+        lstResultados.Columns.Add("k4",78,HorizontalAlignment.Center);
         lstResultados.GridLines = true;
         lstResultados.View = View.Details;
         
@@ -69,7 +69,6 @@ public partial class MetodoNR_FRM : Form
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-        var eq1 = ha.DerivativeSyntax(Infix.ParseOrThrow(txtFuncion.Text));
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
         if (lstResultados.Items.Count != 0)
@@ -78,21 +77,19 @@ public partial class MetodoNR_FRM : Form
             {
                 using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
                 {
-                    foreach (var line in io.CSV_Syntax(eq1))
+                    foreach (var line in rIO.CSV_Syntax())
                     {
                         sw.WriteLine(line);
                     }
             
                 }
-                txtCleaner(controls);
-                lstResultados.Clear();
             }
         }
         else
         {
             MessageBox.Show("No hay nada que Guardar!");
         }
-        
+       
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)
@@ -107,30 +104,45 @@ public partial class MetodoNR_FRM : Form
             var eqq = Infix.ParseOrThrow(txtFuncion.Text);
             try
             {
-                mn.MetodoNewton(eqq,Convert.ToDouble(txtPosInicial.Text),Convert.ToDouble(txtTolerancia.Text), iterMax:100);
+                mr.RungeKutta(eqq,Convert.ToDouble(txtX0.Text), Convert.ToDouble(txtY0.Text), Convert.ToDouble(txtXN.Text),Convert.ToDouble(txtValorPaso.Text));
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCleaner(controls);
             }
-
             ListViewItem lst = new ListViewItem();
-            foreach (var data in io.Copy())
+            int counter = 0;
+            foreach (var data in rIO.Copy())
             {
-                lst = new ListViewItem(data.Contador.ToString());
-                lst.SubItems.Add(data.Xi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.fXi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.fPrimeXi.ToString(CultureInfo.InvariantCulture));
-                lst.SubItems.Add(data.Result.ToString(CultureInfo.CurrentCulture));
-                lst.SubItems.Add(data.Error.ToString(CultureInfo.CurrentCulture)+"%");
-                lstResultados.Items.Add(lst);
+                if (counter == (rIO.Copy().Count-1))
+                {
+                    lst = new ListViewItem(counter.ToString());
+                    lst.SubItems.Add(data.xi.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.yi.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add("-");
+                    lst.SubItems.Add("-");
+                    lst.SubItems.Add("-");
+                    lst.SubItems.Add("-");
+                    lstResultados.Items.Add(lst);
+                }
+                else
+                {
+                    lst = new ListViewItem(counter.ToString());
+                    lst.SubItems.Add(data.xi.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.yi.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.k1.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.k2.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.k3.ToString(CultureInfo.CurrentCulture));
+                    lst.SubItems.Add(data.k4.ToString(CultureInfo.CurrentCulture));
+                    lstResultados.Items.Add(lst);
+                }
+
+                counter++;
             }
 
-
-
-            hr.DataListener(txtFuncion.Text,lstResultados.Items[^2].SubItems[4].Text, lstResultados.Items[^1].SubItems[4].Text);
             
+            //hr.DataListener(txtFuncion.Text, lstResultados.Items[^2].SubItems[1].Text,lstResultados.Items[lstResultados.Items.Count - 1].SubItems[1].Text);
             
 
         }
@@ -151,7 +163,7 @@ public partial class MetodoNR_FRM : Form
         {
             int lastRowIndex = lstResultados.Items.Count - 1;
             
-            if (e.ItemIndex == lastRowIndex && (e.ColumnIndex == 4))
+            if (e.ItemIndex == lastRowIndex && (e.ColumnIndex == 2))
             {
                 e.Graphics.FillRectangle(Brushes.LightGreen, e.Bounds);
                 TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lstResultados.Font, e.Bounds, Color.Black, TextFormatFlags.HorizontalCenter);
@@ -165,12 +177,6 @@ public partial class MetodoNR_FRM : Form
 
 
     }
-
-    private void btnGrafico_Click(object sender, EventArgs e)
-    {
-        using (test tst = new test())
-        {
-            tst.ShowDialog();
-        }
-    }
+    
+    
 }

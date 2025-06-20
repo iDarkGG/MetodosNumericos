@@ -72,18 +72,26 @@ public partial class MetodoSecanteFRM : Form
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
         sfd.AddExtension = true;
         sfd.DefaultExt = ".csv";
-        if (sfd.ShowDialog() == DialogResult.OK)
+        if (lstResultados.Items.Count != 0)
         {
-            using(StreamWriter sw = File.CreateText(sfd.FileName))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                foreach (var line in sec.CSV_Syntax())
+                using(StreamWriter sw = File.CreateText(sfd.FileName))
                 {
-                    sw.WriteLine(line);
-                }
+                    foreach (var line in sec.CSV_Syntax())
+                    {
+                        sw.WriteLine(line);
+                    }
             
+                }
+                lstResultados.Clear();
             }
-            lstResultados.Clear();
         }
+        else
+        {
+            MessageBox.Show("No hay nada que Guardar!");
+        }
+        
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)

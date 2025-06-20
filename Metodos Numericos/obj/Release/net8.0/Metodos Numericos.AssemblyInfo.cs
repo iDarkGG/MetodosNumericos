@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Metodos Numericos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef9b1ce9645adf3340242978608862c2cea7eba0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cb132f1606af3edc908f829f498f4b79d4afcd6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Metodos Numericos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Metodos Numericos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

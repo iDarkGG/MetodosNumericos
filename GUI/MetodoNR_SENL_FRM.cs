@@ -45,6 +45,7 @@ public partial class MetodoNR_SENL_FRM : Form
     
     private void Form1_Load(object sender, EventArgs e)
     {
+        nr.Cleaner();
         foreach (Control control in this.Controls)
         {   
             controls.Add(control);
@@ -61,7 +62,6 @@ public partial class MetodoNR_SENL_FRM : Form
         SENL_Logic();
         grpButton.Enabled = false;
         //ToDo
-        btnGrafico.Enabled = false;
     }
 
 
@@ -89,23 +89,32 @@ public partial class MetodoNR_SENL_FRM : Form
         var eq1 = ha.DerivativeSyntax(Infix.ParseOrThrow(txtSENL1.Text));
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
-        if (sfd.ShowDialog() == DialogResult.OK)
+        if (lstResultados.Items.Count != 0)
         {
-            using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                foreach (var line in nr.CSV_Syntax(eq1))
+                using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
                 {
-                    sw.WriteLine(line);
-                }
+                    foreach (var line in nr.CSV_Syntax(eq1))
+                    {
+                        sw.WriteLine(line);
+                    }
             
+                }
+                txtCleaner(controls);
+                lstResultados.Clear();
             }
-            txtCleaner(controls);
-            lstResultados.Clear();
         }
+        else
+        {
+            MessageBox.Show("No hay nada que Guardar!");
+        }
+        
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)
     {
+        lstResultados.Items.Clear();
         //TEMP
         controls.Remove(txtPI3);
         controls.Remove(txtSENL3);

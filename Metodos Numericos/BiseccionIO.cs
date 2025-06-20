@@ -45,6 +45,11 @@ public class BiseccionIO
         return resultSet;
     }
 
+    public void Cleaner()
+    {
+        Console.WriteLine("UwU");
+        _lista.Clear();
+    }
 
     public List<BiseccionIO> Copy()
     {

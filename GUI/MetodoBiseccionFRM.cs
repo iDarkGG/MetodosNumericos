@@ -30,6 +30,7 @@ public partial class MetodoBiseccionFRM : Form
     
     private void Form1_Load(object sender, EventArgs e)
     {
+
         foreach (Control control in this.Controls)
         {   
             controls.Add(control);
@@ -40,8 +41,8 @@ public partial class MetodoBiseccionFRM : Form
         lstResultados.GridLines = true;
         lstResultados.View = View.Details;
         
-        //ToDo
-        btnGrafico.Enabled = false;
+        BIo.Cleaner();
+        
     }
 
 
@@ -68,22 +69,32 @@ public partial class MetodoBiseccionFRM : Form
     {
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
-        if (sfd.ShowDialog() == DialogResult.OK)
+        if (lstResultados.Items.Count != 0)
         {
-            using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                foreach (var line in BIo.CSV_Syntax())
+                using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
                 {
-                    sw.WriteLine(line);
-                }
+                    foreach (var line in BIo.CSV_Syntax())
+                    {
+                        sw.WriteLine(line);
+                    }
             
+                }
             }
-            lstResultados.Clear();
+            txtCleaner(controls);
+            lstResultados.Items.Clear();
         }
+        else
+        {
+            MessageBox.Show("No hay nada que Guardar!");
+        }
+       
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)
     {
+        lstResultados.Items.Clear();
         if (hr.TextBoxChecker(controls))
         {
             MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -100,7 +111,6 @@ public partial class MetodoBiseccionFRM : Form
                 MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCleaner(controls);
             }
-
             ListViewItem lst = new ListViewItem();
             foreach (var data in BIo.Copy())
             {
@@ -109,8 +119,11 @@ public partial class MetodoBiseccionFRM : Form
                 lst.SubItems.Add(data.Error.ToString(CultureInfo.CurrentCulture)+"%");
                 lstResultados.Items.Add(lst);
             }
+
             
-            txtCleaner(controls);
+            hr.DataListener(txtFuncion.Text, lstResultados.Items[^2].SubItems[1].Text,lstResultados.Items[lstResultados.Items.Count - 1].SubItems[1].Text);
+            
+
 
         }
         
@@ -143,5 +156,13 @@ public partial class MetodoBiseccionFRM : Form
 
 
 
+    }
+
+    private void btnGrafico_Click(object sender, EventArgs e)
+    {
+        using (test tst = new test())
+        {
+            tst.ShowDialog();
+        }
     }
 }

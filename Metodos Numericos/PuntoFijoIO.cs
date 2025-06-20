@@ -50,6 +50,11 @@ public class PuntoFijoIO
         return resultSet;
     }
 
+    public void Cleaner()
+    {
+        _lista.Clear();
+    }
+
 
     public List<PuntoFijoIO> Copy()
     {

@@ -1,10 +1,13 @@
-﻿using Metodos_Numericos;
+﻿using System.Globalization;
+using Metodos_Numericos;
 
 namespace WinFormsApp1;
 
 public class Herramientas : Form
 {
     HerramientasCalculo hr = new HerramientasCalculo();
+    
+    private static List<string> _list = new List<string>();
     
     public bool TextBoxChecker(List<Control> controls, string txtName = null)
     {
@@ -31,7 +34,6 @@ public class Herramientas : Form
         {
             return MessageBox.Show("Tenga en cuenta que ingreso una Ecuacion!", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-        //if(!hr.VerificadorBolzano(texto, limInf, limSup))
         return MessageBox.Show("Sintaxis Correcta \nPuede Proceder", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
@@ -51,6 +53,21 @@ public class Herramientas : Form
             
             }
         }
+    }
+
+
+    public void DataListener(string exp, string x1,  string x2)
+    {
+       _list.Clear();
+        
+        _list.Add(exp);
+        _list.Add(x1.ToString(CultureInfo.InvariantCulture));
+        _list.Add(x2.ToString(CultureInfo.InvariantCulture));
+    }
+
+    public List<string> DataPayload()
+    {
+        return _list.ToList();
     }
     
 }

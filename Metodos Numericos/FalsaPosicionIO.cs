@@ -45,6 +45,10 @@ public class FalsaPosicionIO
         return resultSet;
     }
 
+    public void Cleaner()
+    {
+        _lista.Clear();
+    }
 
     public List<FalsaPosicionIO> Copy()
     {

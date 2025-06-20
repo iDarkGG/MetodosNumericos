@@ -54,6 +54,12 @@ public class NewtonRaphsonSENL_IO
     }
 
 
+    public void Cleaner()
+    {
+        _lista.Clear();
+    }
+    
+    
     public List<NewtonRaphsonSENL_IO> Copy()
     {
         return _lista.ToList();

@@ -30,6 +30,7 @@ public partial class MetodoFalsaPosicionFRM : Form
     
     private void Form1_Load(object sender, EventArgs e)
     {
+        fIO.Cleaner();
         foreach (Control control in this.Controls)
         {   
             controls.Add(control);
@@ -40,8 +41,6 @@ public partial class MetodoFalsaPosicionFRM : Form
         lstResultados.GridLines = true;
         lstResultados.View = View.Details;
         
-        //ToDo
-        btnGrafico.Enabled = false;
     }
 
 
@@ -68,23 +67,34 @@ public partial class MetodoFalsaPosicionFRM : Form
     {
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
-        if (sfd.ShowDialog() == DialogResult.OK)
+
+        if (lstResultados.Items.Count != 0)
         {
-            using (StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                
-                foreach (var line in fIO.CSV_Syntax())
+                using (StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
                 {
-                    sw.WriteLine(line);
-                }
+                
+                    foreach (var line in fIO.CSV_Syntax())
+                    {
+                        sw.WriteLine(line);
+                    }
             
+                }
+                lstResultados.Clear();
+                txtCleaner(controls);
             }
-            lstResultados.Clear();
         }
+        else
+        {
+            MessageBox.Show("No hay nada que Guardar!");
+        }
+        
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)
     {
+        lstResultados.Items.Clear();
         if (hr.TextBoxChecker(controls))
         {
             MessageBox.Show("Error en los campos, verifique que esten llenos y en el formato correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -112,7 +122,7 @@ public partial class MetodoFalsaPosicionFRM : Form
                 lstResultados.Items.Add(lst);
             }
             
-            txtCleaner(controls);
+            hr.DataListener(txtFuncion.Text, lstResultados.Items[^2].SubItems[1].Text, lstResultados.Items[^1].SubItems[1].Text);
 
         }
         
@@ -145,5 +155,13 @@ public partial class MetodoFalsaPosicionFRM : Form
 
 
 
+    }
+
+    private void btnGrafico_Click(object sender, EventArgs e)
+    {
+        using (test tst = new test())
+        {
+            tst.ShowDialog();
+        }
     }
 }

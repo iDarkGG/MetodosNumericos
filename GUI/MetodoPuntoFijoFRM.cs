@@ -41,8 +41,6 @@ public partial class MetodoPuntoFijoFRM : Form
         lstResultados.GridLines = true;
         lstResultados.View = View.Details;
         
-        //ToDo
-        btnGrafico.Enabled = false;
     }
 
 
@@ -70,19 +68,27 @@ public partial class MetodoPuntoFijoFRM : Form
         var eq1 = hc.DerivativeSyntax(Infix.ParseOrThrow(txtFuncion.Text));
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.InitialDirectory = Directory.GetCurrentDirectory();
-        if (sfd.ShowDialog() == DialogResult.OK)
+        if (lstResultados.Items.Count != 0)
         {
-            using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                foreach (var line in p.CSV_Syntax(eq1))
+                using(StreamWriter sw = File.CreateText(sfd.FileName + ".csv"))
                 {
-                    sw.WriteLine(line);
-                }
+                    foreach (var line in p.CSV_Syntax(eq1))
+                    {
+                        sw.WriteLine(line);
+                    }
             
+                }
+                txtCleaner(controls);
+                lstResultados.Clear();
             }
-            txtCleaner(controls);
-            lstResultados.Clear();
         }
+        else
+        {
+            MessageBox.Show("No hay nada que Guardar!");
+        }
+        
     }
 
     private void btnCalcular_Click(object sender, EventArgs e)
@@ -112,8 +118,10 @@ public partial class MetodoPuntoFijoFRM : Form
                 lst.SubItems.Add(data.Error.ToString(CultureInfo.CurrentCulture)+"%");
                 lstResultados.Items.Add(lst);
             }
+            p.Cleaner();
             
-            
+            hr.DataListener(txtFuncion.Text, lstResultados.Items[^2].SubItems[1].Text,lstResultados.Items[^1].SubItems[1].Text);
+            txtCleaner(controls);
 
         }
         
@@ -146,5 +154,13 @@ public partial class MetodoPuntoFijoFRM : Form
 
 
 
+    }
+
+    private void btnGrafico_Click(object sender, EventArgs e)
+    {
+        using (test tst = new test())
+        {
+            tst.ShowDialog();
+        }
     }
 }

@@ -57,6 +57,10 @@ public class NewtonRaphsonIO
         return resultSet;
     }
 
+    public void Cleaner()
+    {
+        _lista.Clear();
+    }
 
     public List<NewtonRaphsonIO> Copy()
     {

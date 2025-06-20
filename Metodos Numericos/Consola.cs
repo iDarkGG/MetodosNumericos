@@ -18,11 +18,26 @@ public class Consola
         MetodoSecante ms = new MetodoSecante();
         HerramientasCalculo hr = new HerramientasCalculo();
         MetodoNewtonRaphsonSenl mns = new MetodoNewtonRaphsonSenl();
+        MetodoRungeKutta_4 rk = new MetodoRungeKutta_4();
         int menu = 0;
         //
          List<Expr> results = new List<Expr>();
         List<double> valores = new List<double>();
          var eqq = String.Empty;
+
+         Console.WriteLine("Por favor ingrese la funcion");
+         eqq = Console.ReadLine();
+         var expreB = Infix.ParseOrThrow(eqq);
+         Console.WriteLine("Ingrese x0");
+         double x0 = Convert.ToDouble(Console.ReadLine());
+         Console.WriteLine("Ingrese y0");
+         double y0 = Convert.ToDouble(Console.ReadLine());
+         Console.WriteLine("Ingrese xN");
+         double xN = Convert.ToDouble(Console.ReadLine());
+         Console.WriteLine("Ingrese h");
+         double h = Convert.ToDouble(Console.ReadLine());
+         
+         rk.RungeKutta(expreB, x0, y0, xN, h);
         // var x = new Dictionary<string, FloatingPoint>
         // {
         //     { "x", 0.5 }
@@ -48,7 +63,7 @@ public class Consola
         // {
         //     Console.WriteLine(Infix.Format(item));
         // }
-        Console.WriteLine(Directory.GetCurrentDirectory());
+        //Console.WriteLine(Directory.GetCurrentDirectory());
         // do
         // {
         //     Console.WriteLine("Por favor seleccione el Metodo con el que aproximar");

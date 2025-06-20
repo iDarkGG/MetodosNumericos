@@ -79,6 +79,23 @@ public class HerramientasCalculo
         return result;
     }
 
+    public double EvaluarEcuacionDoble(Expr exp, double x, double y)
+    {
+        double result = 0d;
+        var simbolos = new Dictionary<string, FloatingPoint>{ {"x", x}, {"y", y} };
+        try
+        {
+            result = Evaluate.Evaluate(simbolos, exp).RealValue;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
+        
+        return result;
+    }
+
     public bool VerificadorBolzano(Expr xp, double limInf, double limSup)
     {
         return (EvaluarEcuacion(xp, limInf) * EvaluarEcuacion(xp, limSup)) < 0;
@@ -237,22 +254,6 @@ public class HerramientasCalculo
     }
 
 
-    public string PrintMatrix(Matrix<double> matrix, int n)
-    {
-        var x = String.Empty;
-        if (n == 2)
-        {
-           x = matrix[0, 0] + " | " + matrix[0, 1]+"|\n"+
-               matrix[1, 0] + " | " + matrix[1, 1]+"|";
-        }
-        else
-        {
-            x = matrix[0, 0] + " | " + matrix[0, 1] + " | " + matrix[0, 2]+"|\n"+
-                matrix[1, 0] + " | " + matrix[1, 1] + " | " + matrix[1, 2]+"|\n"+
-                matrix[2, 0] + " | " + matrix[2, 1] + " | " + matrix[3, 2]+"|";
-        }
 
-        return x;
-    }
 }
    

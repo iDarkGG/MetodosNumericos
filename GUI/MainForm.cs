@@ -98,12 +98,7 @@ public partial class MainForm : Form
             }
         }
     }
-
-    private void pictureBox1_Click(object sender, EventArgs e)
-    {
-        SidebarTransition.Start();
-        //MessageBox.Show("Test");
-    }
+    
 
     private void MainForm_Load(object sender, EventArgs e)
     {
@@ -143,14 +138,16 @@ public partial class MainForm : Form
     {
         AbrirFormEnPanel(new MetodoNR_SENL_FRM());
     }
-
-    private void btnHerramientas_Click(object sender, EventArgs e)
-    {
-        MessageBox.Show("PROXIMAMENTE");
-    }
+    
 
     private void btnFP_Click(object sender, EventArgs e)
     {
         AbrirFormEnPanel(new MetodoFalsaPosicionFRM());
+    }
+
+
+    private void btnRungeKutta_Click(object sender, EventArgs e)
+    {
+        AbrirFormEnPanel(new MetodoRungeKuttaFRM());
     }
 }

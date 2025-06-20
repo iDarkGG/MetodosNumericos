@@ -39,7 +39,6 @@ partial class MetodoNR_SENL_FRM
         lstResultados = new System.Windows.Forms.ListView();
         btnChckSyntax = new System.Windows.Forms.Button();
         btnSave = new System.Windows.Forms.Button();
-        btnGrafico = new System.Windows.Forms.Button();
         btnCalcular = new System.Windows.Forms.Button();
         btnSalir = new System.Windows.Forms.Button();
         label7 = new System.Windows.Forms.Label();
@@ -136,17 +135,6 @@ partial class MetodoNR_SENL_FRM
         btnSave.Text = "Guardar CSV";
         btnSave.UseVisualStyleBackColor = false;
         btnSave.Click += btnSave_Click;
-        // 
-        // btnGrafico
-        // 
-        btnGrafico.BackColor = System.Drawing.Color.White;
-        btnGrafico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        btnGrafico.Location = new System.Drawing.Point(779, 403);
-        btnGrafico.Name = "btnGrafico";
-        btnGrafico.Size = new System.Drawing.Size(63, 24);
-        btnGrafico.TabIndex = 14;
-        btnGrafico.Text = "Grafico";
-        btnGrafico.UseVisualStyleBackColor = false;
         // 
         // btnCalcular
         // 
@@ -253,7 +241,6 @@ partial class MetodoNR_SENL_FRM
         Controls.Add(label7);
         Controls.Add(btnSalir);
         Controls.Add(btnCalcular);
-        Controls.Add(btnGrafico);
         Controls.Add(btnSave);
         Controls.Add(btnChckSyntax);
         Controls.Add(lstResultados);
@@ -289,7 +276,6 @@ partial class MetodoNR_SENL_FRM
     private System.Windows.Forms.Button btnSave;
 
     private System.Windows.Forms.Button btnCalcular;
-    private System.Windows.Forms.Button btnGrafico;
 
     private System.Windows.Forms.Button btnChckSyntax;
 

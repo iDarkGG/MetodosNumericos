@@ -181,6 +181,7 @@ partial class MetodoBiseccionFRM
         btnGrafico.TabIndex = 14;
         btnGrafico.Text = "Grafico";
         btnGrafico.UseVisualStyleBackColor = false;
+        btnGrafico.Click += btnGrafico_Click;
         // 
         // btnCalcular
         // 
